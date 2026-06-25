@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import bcrypt from "bcryptjs";
 import generateToken from "../../../utils/generateToken.js";
+import sendEmail from "../../../utils/sendEmail.js";
 
 // REGISTER USER
 export const registerUser = async (req, res) => {
@@ -13,7 +14,7 @@ export const registerUser = async (req, res) => {
         message: "All fields are required",
       });
     }
-
+    
     // NORMALIZE EMAIL
     const emailNormalized = email.toLowerCase().trim();
 
@@ -37,6 +38,11 @@ export const registerUser = async (req, res) => {
       password: hashedPassword,
       role: "user",
     });
+
+    await sendEmail(
+      user.email,
+      "Welcome to E-Commerce Marketplace",
+      `Hello ${user.name}, your account has been created successfully.`);
 
     res.status(201).json({
       message: "User registered successfully",
@@ -106,3 +112,4 @@ export const loginUser = async (req, res) => {
     });
   }
 };
+   

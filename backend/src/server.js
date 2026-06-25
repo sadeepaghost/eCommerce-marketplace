@@ -14,7 +14,7 @@ import adminRoutes from "./modules/admin/routes/adminRoutes.js";
 import uploadRoutes from "./modules/products/routes/uploadRoutes.js";
 import paymentRoutes from "./modules/payments/routes/paymentRoutes.js";
 import couponRoutes from "./modules/coupons/routes/couponRoutes.js";
-
+import sendEmail from "./utils/sendEmail.js";
 
 const app = express();
 app.use(express.json());
@@ -31,6 +31,23 @@ app.use("/api/upload", uploadRoutes);
 app.use("/api/payments", paymentRoutes);
 app.get("/", (req, res) => {
   res.send("API Running...");
+});
+
+app.get("/test-email", async (req, res) => {
+  try {
+    await sendEmail(
+      "sadeepaamaranayake@gmail.com",
+      "Test Email",
+      "Email service is working"
+    );
+
+    res.send("Email sent successfully");
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 });
 
 const PORT = process.env.PORT || 5000;

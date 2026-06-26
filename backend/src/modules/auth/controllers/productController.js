@@ -157,3 +157,17 @@ export const updateStock = async (req, res) => {
     });
   }
 };
+
+export const getLowStockProducts = async (req, res) => {
+  try {
+    const products = await Product.find({
+      stock: { $lt: 10 },
+    });
+
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};

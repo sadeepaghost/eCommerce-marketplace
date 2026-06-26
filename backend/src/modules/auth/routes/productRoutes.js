@@ -6,6 +6,7 @@ import {
   updateProduct,
   deleteProduct,
   updateStock,
+  getLowStockProducts,
 } from "../controllers/productController.js";
 
 import {protect} from "../../../middlewares/authMiddleware.js";
@@ -14,6 +15,7 @@ const router = express.Router();
 
 // PUBLIC
 router.get("/", getProducts);
+router.get("/low-stock", protect, getLowStockProducts);
 router.get("/:id", getProductById);
 router.put("/:id/stock", protect, updateStock);
 

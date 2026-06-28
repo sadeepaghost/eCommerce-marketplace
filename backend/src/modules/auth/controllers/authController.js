@@ -150,7 +150,7 @@ export const forgotPassword = async (req, res) => {
     //  "Password Reset",
     //  `Reset your password using this link:\n\n${resetUrl}`
     //);
-
+    console.log("Reset URL:", resetUrl);
     res.json({
     message: "Reset token generated",
     resetToken,
@@ -170,6 +170,8 @@ export const forgotPassword = async (req, res) => {
 
 export const resetPassword = async (req, res) => {
   try {
+    console.log("original token:", req.params.token);
+
     const resetToken = crypto
       .createHash("sha256")
       .update(req.params.token)
@@ -179,6 +181,8 @@ export const resetPassword = async (req, res) => {
       resetPasswordToken: resetToken,
       resetPasswordExpire: { $gt: Date.now() },
     });
+
+    console.log("user found:", user);
 
     if (!user) {
       return res.status(400).json({

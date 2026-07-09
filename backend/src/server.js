@@ -15,11 +15,15 @@ import uploadRoutes from "./modules/products/routes/uploadRoutes.js";
 import paymentRoutes from "./modules/payments/routes/paymentRoutes.js";
 import couponRoutes from "./modules/coupons/routes/couponRoutes.js";
 import sendEmail from "./utils/sendEmail.js";
+import userRoutes from "./modules/users/routes/userRoutes.js";
+import addressRoutes from "./modules/address/routes/addressRoutes.js";
 
 const app = express();
 app.use(express.json());
 app.use("/api/products", productRoutes);
 app.use("/api/coupons", couponRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/address", addressRoutes);
 app.use("/api/carts", cartRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/orders", orderRoutes);
@@ -49,9 +53,6 @@ app.get("/test-email", async (req, res) => {
     });
   }
 });
-
-const PORT = process.env.PORT || 5000;
-
 const startServer = async () => {
   try {
     await connectDB();
@@ -67,3 +68,5 @@ const startServer = async () => {
 };
 
 startServer();
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

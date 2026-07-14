@@ -4,9 +4,9 @@ const user = JSON.parse(localStorage.getItem("user"));
 const token = localStorage.getItem("token");
 
 const initialState = {
-  user: null,
-  token: null,
-  isLoggedIn: false,
+  user: user || null,
+  token: token || null,
+  isLoggedIn: !!token,
 };
 
 const authSlice = createSlice({
@@ -23,6 +23,9 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.isLoggedIn = false;
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
     },
   },
 });

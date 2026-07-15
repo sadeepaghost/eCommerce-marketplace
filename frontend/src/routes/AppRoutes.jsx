@@ -16,6 +16,7 @@ import Checkout from "../pages/Checkout";
 import Orders from "../pages/Orders";
 import Profile from "../pages/Profile";
 import NotFound from "../pages/NotFound";
+import ProtectedRoute from "../features/auth/ProtectRoute";
 
 function AppRoutes() {
   return (
@@ -48,22 +49,37 @@ function AppRoutes() {
 
           <Route
             path="/cart"
-            element={<Cart />}
+            element={
+              <ProtectedRoute>
+                <Cart />
+              </ProtectedRoute>
+            }
           />
 
           <Route
             path="/checkout"
-            element={<Checkout />}
+            element={
+            <ProtectedRoute>
+            <Checkout />
+            </ProtectedRoute>
+            }
           />
 
           <Route
             path="/orders"
-            element={<Orders />}
+            element={
+             <ProtectedRoute>
+             <Orders />
+             </ProtectedRoute>
+            }
           />
 
           <Route
-            path="/profile"
-            element={<Profile />}
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>}
           />
 
         </Route>

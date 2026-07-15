@@ -4,14 +4,14 @@ function ProductCard({ product }) {
   return (
     <div className="border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
 
-      <img
-        src={
-          product.image ||
-          "https://via.placeholder.com/300x200"
-        }
-        alt={product.name}
-        className="w-full h-52 object-cover"
-      />
+       <img
+            src={
+                product.image ||
+                "https://via.placeholder.com/300x250?text=No+Image"
+            }
+            alt={product.name}
+            className="w-full h-52 object-cover rounded-lg"
+       />
 
       <div className="p-4">
 

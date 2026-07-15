@@ -40,10 +40,10 @@ export const registerUser = async (req, res) => {
       role: "user",
     });
 
-    await sendEmail(
-      user.email,
-      "Welcome to E-Commerce Marketplace",
-      `Hello ${user.name}, your account has been created successfully.`);
+    //await sendEmail(
+    //  user.email,
+    //  "Welcome to E-Commerce Marketplace",
+    //  `Hello ${user.name}, your account has been created successfully.`);
 
     res.status(201).json({
       message: "User registered successfully",

@@ -2,43 +2,37 @@ import { Link } from "react-router-dom";
 
 function ProductCard({ product }) {
   return (
-    <div className="border rounded-lg shadow-md overflow-hidden hover:shadow-lg transition">
+    <div className="bg-white rounded-xl shadow hover:shadow-lg transition p-4">
+      <Link to={`/product/${product._id}`}>
+        <img
+          src={
+            product.image ||
+            product.images?.[0] ||
+            "https://placehold.co/600x400?text=No+Image"
+          }
+          alt={product.name}
+          className="w-full h-52 object-cover rounded-lg"
+        />
 
-       <img
-            src={
-                product.image ||
-                "https://via.placeholder.com/300x250?text=No+Image"
-            }
-            alt={product.name}
-            className="w-full h-52 object-cover rounded-lg"
-       />
-
-      <div className="p-4">
-
-        <h2 className="text-xl font-bold">
+        <h3 className="text-lg font-semibold mt-4">
           {product.name}
-        </h2>
+        </h3>
+      </Link>
 
-        <p className="text-gray-600 mt-2">
-          {product.description}
-        </p>
+      <p className="text-gray-500 mt-2">
+        LKR {Number(product.price).toLocaleString()}
+      </p>
 
-        <p className="text-2xl font-bold text-blue-600 mt-3">
-          ${product.price}
-        </p>
+      <p className="text-sm text-gray-500 mt-1">
+        Stock: {product.stock ?? 0}
+      </p>
 
-        <p className="mt-2">
-          Stock: {product.stock}
-        </p>
-
-        <Link
-          to={`/product/${product._id}`}
-          className="block mt-4 bg-blue-600 text-white text-center py-2 rounded hover:bg-blue-700"
-        >
-          View Details
-        </Link>
-
-      </div>
+      <button
+        type="button"
+        className="mt-4 w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700"
+      >
+        Add to Cart
+      </button>
     </div>
   );
 }

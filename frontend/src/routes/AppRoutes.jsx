@@ -17,7 +17,6 @@ import Orders from "../pages/Orders";
 import Profile from "../pages/Profile";
 import NotFound from "../pages/NotFound";
 import ProtectedRoute from "../features/auth/ProtectRoute";
-
 function AppRoutes() {
   return (
     <BrowserRouter>
@@ -80,6 +79,10 @@ function AppRoutes() {
                 <ProtectedRoute>
                   <Profile />
                 </ProtectedRoute>}
+          />
+
+          <Route path="/product/:id" 
+              element={<ProductDetails />} 
           />
 
         </Route>

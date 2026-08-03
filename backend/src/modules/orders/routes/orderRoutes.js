@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.post("/", protect, createOrder);
 
-router.get("/", protect, getMyOrders);
+router.get("/my", protect, getMyOrders);
 
 router.put("/:id/status", protect, updateOrderStatus);
 

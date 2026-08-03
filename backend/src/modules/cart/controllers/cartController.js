@@ -56,9 +56,13 @@ export const getCart = async (req, res) => {
 };
 
 // REMOVE ITEM FROM CART
+// REMOVE ITEM FROM CART
 export const removeFromCart = async (req, res) => {
   try {
-    const cartItem = await Cart.findById(req.params.id);
+    const cartItem = await Cart.findOne({
+      _id: req.params.id,
+      userId: req.user.id,
+    });
 
     if (!cartItem) {
       return res.status(404).json({
@@ -68,11 +72,72 @@ export const removeFromCart = async (req, res) => {
 
     await cartItem.deleteOne();
 
-    res.json({
+    return res.status(200).json({
       message: "Item removed from cart",
     });
   } catch (error) {
-    res.status(500).json({
+    console.error("Remove cart item error:", error);
+
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+// UPDATE CART ITEM QUANTITY
+export const updateCartItem = async (req, res) => {
+  try {
+    const { quantity } = req.body;
+    const cartItemId = req.params.id;
+
+    const parsedQuantity = Number(quantity);
+
+    if (!Number.isInteger(parsedQuantity) || parsedQuantity < 1) {
+      return res.status(400).json({
+        message: "Quantity must be a whole number greater than 0",
+      });
+    }
+
+    const cartItem = await Cart.findOne({
+      _id: cartItemId,
+      userId: req.user.id,
+    });
+
+    if (!cartItem) {
+      return res.status(404).json({
+        message: "Cart item not found",
+      });
+    }
+
+    const product = await Product.findById(cartItem.productId);
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
+    if (parsedQuantity > product.stock) {
+      return res.status(400).json({
+        message: `Only ${product.stock} item(s) available`,
+      });
+    }
+
+    cartItem.quantity = parsedQuantity;
+    await cartItem.save();
+
+    const updatedCartItem = await Cart.findById(cartItem._id).populate(
+      "productId"
+    );
+
+    return res.status(200).json({
+      message: "Cart quantity updated",
+      cartItem: updatedCartItem,
+    });
+  } catch (error) {
+    console.error("Update cart error:", error);
+
+    return res.status(500).json({
       message: error.message,
     });
   }

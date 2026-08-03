@@ -43,6 +43,7 @@ export const createOrder = async (req, res) => {
       await item.productId.save();
     }
 
+
     await Cart.deleteMany({
       userId: req.user.id,
     });

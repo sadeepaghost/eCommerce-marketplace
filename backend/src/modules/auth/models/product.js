@@ -36,6 +36,33 @@ const productSchema = new mongoose.Schema(
       required: true,
       default: 0,
     },
+    brand: {
+      type: String,
+      default: "Generic",
+    },
+    rating: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    numReviews: {
+      type: Number,
+      default: 0,
+    },
+    isFeatured: {
+      type: Boolean,
+      default: false,
+    },
+    createdAt: {
+      type: Date,
+      required: true,
+      default: Date.now,
+    },
+    updatedAt: {
+      type: Date,
+      required: true,
+      default: Date.now,
+    },
   },
   { timestamps: true }
 );

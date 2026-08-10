@@ -3,16 +3,33 @@ import Product from "../models/Product.js";
 // CREATE PRODUCT
 export const createProduct = async (req, res) => {
   try {
-    const { name, price, description, category, image, stock } = req.body;
-
-    const product = await Product.create({
+    const {
       name,
       price,
       description,
       category,
       image,
       stock,
-      userId: req.user.id, // from JWT middleware
+      brand,
+      isFeatured,
+    } = req.body;
+
+    if (!name || price === undefined || !description || stock === undefined) {
+      return res.status(400).json({
+        message: "Name, price, description and stock are required",
+      });
+    }
+
+    const product = await Product.create({
+      name: name.trim(),
+      price: Number(price),
+      description: description.trim(),
+      category: category?.trim() || "general",
+      image: image?.trim() || "",
+      stock: Number(stock),
+      brand: brand?.trim() || "Generic",
+      isFeatured: Boolean(isFeatured),
+      userId: req.user.id,
     });
 
     res.status(201).json(product);
@@ -100,12 +117,30 @@ export const getProductById = async (req, res) => {
 // UPDATE PRODUCT
 export const updateProduct = async (req, res) => {
   try {
-    const { name, price, description, category, image, stock } = req.body;
+    const allowedFields = [
+      "name",
+      "price",
+      "description",
+      "category",
+      "image",
+      "stock",
+      "brand",
+      "isFeatured",
+    ];
+
+    const updates = Object.fromEntries(
+      allowedFields
+        .filter((field) => req.body[field] !== undefined)
+        .map((field) => [field, req.body[field]])
+    );
 
     const product = await Product.findByIdAndUpdate(
       req.params.id,
-      { name, price, description, category, image, stock },
-      { new: true }
+      updates,
+      {
+        new: true,
+        runValidators: true,
+      }
     );
 
     if (!product) {

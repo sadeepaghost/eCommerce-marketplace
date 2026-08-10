@@ -6,7 +6,7 @@ import SectionTitle from "../components/SectionTitle";
 import Loader from "../components/Loader";
 import ProductGrid from "../components/ProductGrid";
 
-import { getAllProducts } from "../services/products/productService";
+import { getAllProducts } from "../services/product/productService";
 
 function Home() {
   const [products, setProducts] = useState([]);

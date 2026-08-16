@@ -26,6 +26,7 @@ function Navbar() {
             <>
               <NavLink className={linkClass} to="/cart">Cart</NavLink>
               <NavLink className={linkClass} to="/orders">Orders</NavLink>
+              {user?.role === "admin" && <NavLink className={linkClass} to="/admin">Admin</NavLink>}
               <NavLink className={linkClass} to="/profile">{user?.name || "Profile"}</NavLink>
               <button onClick={handleLogout} className="rounded-lg bg-blue-800 px-3 py-2 hover:bg-blue-900">Logout</button>
             </>

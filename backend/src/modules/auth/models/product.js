@@ -9,6 +9,7 @@ const productSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: true,
+      min: 0,
     },
     description: {
       type: String,
@@ -29,11 +30,8 @@ const productSchema = new mongoose.Schema(
     },
     stock: {
       type: Number,
-      default: 0,
-    },
-    stock: {
-      type: Number,
       required: true,
+      min: 0,
       default: 0,
     },
     brand: {
@@ -43,6 +41,7 @@ const productSchema = new mongoose.Schema(
     rating: {
       type: Number,
       required: true,
+      min: 0,
       default: 0,
     },
     numReviews: {
@@ -52,16 +51,6 @@ const productSchema = new mongoose.Schema(
     isFeatured: {
       type: Boolean,
       default: false,
-    },
-    createdAt: {
-      type: Date,
-      required: true,
-      default: Date.now,
-    },
-    updatedAt: {
-      type: Date,
-      required: true,
-      default: Date.now,
     },
   },
   { timestamps: true }

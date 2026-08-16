@@ -16,30 +16,30 @@ function Cart() {
 
   const navigate = useNavigate();
 
-  const fetchCart = async () => {
-    try {
-      const data = await getCart();
-      setCartItems(Array.isArray(data) ? data : data.cart || []);
-    } catch (error) {
-      console.error("Get cart error:", error);
-
-      if (error.response?.status === 401) {
-        toast.error("Please log in to view your cart");
-        navigate("/login");
-        return;
-      }
-
-      toast.error(
-        error.response?.data?.message || "Could not load your cart"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    fetchCart();
-  }, []);
+    let active = true;
+
+    getCart()
+      .then((data) => {
+        if (active) setCartItems(Array.isArray(data) ? data : data.cart || []);
+      })
+      .catch((error) => {
+        if (!active) return;
+        if (error.response?.status === 401) {
+          toast.error("Please log in to view your cart");
+          navigate("/login");
+          return;
+        }
+        toast.error(error.response?.data?.message || "Could not load your cart");
+      })
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [navigate]);
 
   const handleQuantityChange = async (cartItem, newQuantity) => {
     if (newQuantity < 1) return;

@@ -17,17 +17,11 @@ function Login() {
 
   const onSubmit = async (data) => {
   try {
-    console.log("Submitting:", data);
 
     const response = await login(data.email, data.password);
 
-    console.log("Response:", response);
-
     localStorage.setItem("token", response.token);
     localStorage.setItem("user", JSON.stringify(response.user));
-
-    console.log("Token after save:", localStorage.getItem("token"));
-    console.log("User after save:", localStorage.getItem("user"));
 
     dispatch(loginSuccess(response));
 

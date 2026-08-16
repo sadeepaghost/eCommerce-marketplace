@@ -13,11 +13,9 @@ function Register() {
   const {
     register,
     handleSubmit,
-    watch,
+    getValues,
     formState: { errors },
   } = useForm();
-
-  const password = watch("password");
 
   const onSubmit = async (data) => {
     try {
@@ -119,7 +117,7 @@ function Register() {
             {...register("confirmPassword", {
               required: "Confirm your password",
               validate: (value) =>
-                value === password || "Passwords do not match",
+                value === getValues("password") || "Passwords do not match",
             })}
           />
 

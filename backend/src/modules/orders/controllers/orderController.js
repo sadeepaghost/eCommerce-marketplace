@@ -104,7 +104,7 @@ export const markOrderPaid = async (req, res) => {
       });
     }
 
-    order.status = "Paid";
+    order.status = "paid";
 
     await order.save();
 

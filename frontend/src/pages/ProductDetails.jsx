@@ -46,9 +46,7 @@ function ProductDetails() {
     try {
       setAddingToCart(true);
 
-      const response = await addToCart(product._id, quantity);
-
-      console.log("Add to cart response:", response);
+      await addToCart(product._id, quantity);
 
       toast.success("Added to cart!");
       navigate("/cart");

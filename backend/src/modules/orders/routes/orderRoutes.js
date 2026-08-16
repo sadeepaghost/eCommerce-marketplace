@@ -1,5 +1,6 @@
 import express from "express";
 import { protect } from "../../../middlewares/authMiddleware.js";
+import { admin } from "../../../middlewares/adminMiddleware.js";
 
 import {
   createOrder,
@@ -14,8 +15,8 @@ router.post("/", protect, createOrder);
 
 router.get("/my", protect, getMyOrders);
 
-router.put("/:id/status", protect, updateOrderStatus);
+router.put("/:id/status", protect, admin, updateOrderStatus);
 
-router.put("/:id/pay", protect, markOrderPaid);
+router.put("/:id/pay", protect, admin, markOrderPaid);
 
 export default router;

@@ -27,7 +27,7 @@ function Login() {
 
     toast.success("Login Successful");
 
-    navigate("/");
+    navigate(response.user.role === "admin" ? "/admin" : "/");
   } catch (error) {
     console.error("Login Error:", error);
 
